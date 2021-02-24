@@ -58,7 +58,63 @@ function writeToFile(fileName, data) {}
  * Initialize app
  */
 function init() {
-	inquirer.prompt(questions).then(_ => console.log("Generating README..."));
+	inquirer.prompt(questions).then(response => {
+		console.log("Generating README...");
+
+		const markdown = `
+			# ${response.title}
+			![GitHub License](${badges[response.license]})
+
+			## Description
+
+			${response.description}
+
+			## Table of Contents
+
+			* [Installation](#installation)
+
+			* [Usage](#usage)
+
+			* [License](#license)
+
+			* [Contributions](#contributions)
+
+			* [Tests](#tests)
+
+			* [Questions](#questions)
+
+			## Installation
+
+			To isntall necessary dependencies, run the following command:
+
+			\`\`\`
+			${response.dependencies}
+			\`\`\`
+
+			## Usage
+			
+			${response.usage}
+
+			## License
+
+			This project is licensed under the ${response.license} license.
+
+			## Contributions
+
+			${response.contributions}
+
+			## Tests
+
+			To run tests, run the following command
+
+			\`\`\`
+			${response.tests}
+			\`\`\`
+
+			## Questions
+			If you have any questions about the repo, open an issue of contact me directly at [${response.email}](${response.email}). You can find more of my work at [${response.username}](https://github.com/${response.username}).
+		`;
+	});
 }
 
 // Function call to initialize app
