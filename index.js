@@ -65,7 +65,6 @@ function init() {
 			# ${response.title}
 			![GitHub License](${badges[response.license]})
 
-			## Description
 
 			${response.description}
 
