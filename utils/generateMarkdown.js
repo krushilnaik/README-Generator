@@ -8,9 +8,25 @@ function renderLicenseLink(license) {}
 
 // TODO: Create a function that returns the license section of README
 // If there is no license, return an empty string
-function renderLicenseSection(license) {}
+// function renderLicenseSection(license) {}
 
-// TODO: Create a function to generate markdown for README
+/**
+ * @typedef {object} InquirerResponse
+ * @property {string} title - title of the project
+ * @property {string} description - description of what the project is
+ * @property {string} license - type of license to render badge for, , e.g. "MIT"
+ * @property {string} dependencies - code snippet to be put in Dependencies section
+ * @property {string} tests - code snippet to be put in the Tests section
+ * @property {string} usage - blurb to be put in the Usage section
+ * @property {string} contributions - blurb to be put in the Contributions section
+ * @property {string} username - GitHub username
+ * @property {string} email - user's email
+ */
+
+/**
+ * Generate markdown for README
+ * @param {InquirerResponse} data response from inquirer.prompt() to be used to generate the README
+ */
 function generateMarkdown(data) {
 
 	// double tabbed to avoid ugly flushed-left text
@@ -69,6 +85,8 @@ function generateMarkdown(data) {
 		## Questions
 		If you have any questions about the repo, open an issue or contact me directly at <${data.email}>. You can find more of my work at [${data.username}](https://github.com/${data.username}).
 `;
+	
+	return markdown.replace(/[\t]{2}/g, "");
 }
 
 module.exports = generateMarkdown;
