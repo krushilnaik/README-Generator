@@ -1,30 +1,19 @@
-// TODO: Create a function that returns a license badge based on which license is passed in
-// If there is no license, return an empty string
-// function renderLicenseBadge(license) {}
+const badges = [
+	['Apache License 2.0', "[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)"],
+	['Boost Software License 1.0', "[![License](https://img.shields.io/badge/License-Boost%201.0-lightblue.svg)](https://www.boost.org/LICENSE_1_0.txt)"],
+	['GNU General Public License', "[![GPL license](https://img.shields.io/badge/License-GPL-blue.svg)](http://perso.crans.org/besson/LICENSE.html)"],
+	['GNU General Public License 2.0', "[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)"],
+	['MIT License', "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)"],
+	['Mozilla Public License 2.0', "[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)"],
+	['Unlicense License', '[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)'],
+];
 
-// TODO: Create a function that returns the license link
-// If there is no license, return an empty string
-// function renderLicenseLink(license) {}
-
-// TODO: Create a function that returns the license section of README
-// If there is no license, return an empty string
-// function renderLicenseSection(license) {}
-
-const badges = {
-	"apache-2.0": "[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)",
-	"bsl-1.0": "[![License](https://img.shields.io/badge/License-Boost%201.0-lightblue.svg)](https://www.boost.org/LICENSE_1_0.txt)",
-	"bsd-2-clause": "[![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)",
-	"bsd-3-clause": "[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)",
-	"cc0-1.0": "[![License: CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)",
-	"epl-2.0": "",
-	"agpl-3.0": "[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)",
-	"gpl": "[![GPL license](https://img.shields.io/badge/License-GPL-blue.svg)](http://perso.crans.org/besson/LICENSE.html)",
-	"gpl-2.0": "[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)",
-	"lgpl-2.1": "",
-	"mit": "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
-	"mpl-2.0": "[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)",
-	"unlicense": "[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)",
-};
+/**
+ * Map the license type to the markdown representation of its badge
+ * @type {Map<string, string>}
+ */
+// @ts-ignore
+let badgeMap = new Map(badges);
 
 /**
  * @typedef {object} InquirerResponse
@@ -49,7 +38,7 @@ function generateMarkdown(data) {
 	const markdown =  `
 		# ${data.title}
 
-		${badges[data.license] || ""}
+		${badgeMap.get(data.license) || ""}
 
 		## Description
 
@@ -78,12 +67,12 @@ function generateMarkdown(data) {
 		\`\`\`
 
 		## Usage
-		
+
 		${data.usage}
 
 		## License
 
-		This project is licensed under the ${data.license} license.
+		${data.license ? `This project is licensed under the ${data.license}.` : "This project is not licensed."}
 
 		## Contributions
 
@@ -98,10 +87,12 @@ function generateMarkdown(data) {
 		\`\`\`
 
 		## Questions
-		If you have any questions about the repo, open an issue or contact me directly at <${data.email}>. You can find more of my work at [${data.username}](https://github.com/${data.username}).
+
+		If you have any questions about the repo, open an issue or contact me directly at <${data.email}>.
+		You can find more of my work on [my GitHub](https://github.com/${data.username}).
 	`;
 	
 	return markdown.replace(/[\t]{2}/g, "");
 }
 
-module.exports = generateMarkdown;
+module.exports = {generateMarkdown, badgeMap};

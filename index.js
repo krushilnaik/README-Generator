@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 var inquirer = require('inquirer');
-var generateMarkdown = require('./utils/generateMarkdown');
+var {generateMarkdown, badgeMap} = require('./utils/generateMarkdown');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -15,8 +15,9 @@ const questions = [
 		message: "Give a short description of your project:"
 	},
 	{
-		name: "license", type: "input",
-		message: "What kind of license should your project have?"
+		name: "license", type: "list",
+		message: "What kind of license should your project have?",
+		choices: Array.from(badgeMap.keys())
 	},
 	{
 		name: "dependencies", type: "input",
@@ -61,7 +62,6 @@ function init() {
 		console.log("Generating README...");
 
 		const markdown = generateMarkdown(response);
-
 
 		writeToFile("SAMPLE_README.md", markdown);
 	});
