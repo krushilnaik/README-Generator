@@ -59,7 +59,7 @@ function writeToFile(fileName, data) {
  */
 function init() {
 	inquirer.prompt(questions).then(response => {
-		console.log("Generating README...");
+		console.log(`Generating README from response\n${JSON.stringify(response, null, "\t")}`);
 
 		const markdown = generateMarkdown(response);
 
